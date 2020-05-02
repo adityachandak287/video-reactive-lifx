@@ -1,12 +1,12 @@
 # video-reactive-lifx
 
-<img src="https://img.shields.io/badge/python-3.7.3-3776AB?style=plastic&logo=python" alt="python-3.7.3 logo">
+<img src="https://img.shields.io/badge/python-3.7.3-3776AB?style=flat&logo=python" alt="python-3.7.3 logo">
 
 Controlling LIFX light bulb based on average colour of each video frame.
 
 ## What does this do?
 
-[Find demo video of the project here](https://youtu.be/V_pxCcSp9Xs).
+[Find demo video of the project here.](https://youtu.be/V_pxCcSp9Xs)
 
 [![Demo Video Link](media/demo.gif)](https://youtu.be/V_pxCcSp9Xs "Video reactive LIFX light")
 
