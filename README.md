@@ -44,4 +44,4 @@ https://github.com/Sentdex/pygta5
 
 https://github.com/mclarkk/lifxlan
 
-Other minor credits have been mentioned in the respective script files as well.
+Other minor credits have been mentioned in the respective script files.
