@@ -65,7 +65,7 @@ if __name__ == "__main__":
 
     last_time = time.time()
 
-    blank_image = cv2.imread("blank.png")
+    blank_image = cv2.imread(os.path.join("media", "blank.png"))
 
     dev = True
 
