@@ -3,6 +3,7 @@ import time
 from grabscreen import grab_screen
 from lifx import get_lifx_bulb
 import os
+import argparse
 # import numpy as np
 # import colorsys
 # from sklearn.cluster import KMeans
@@ -56,6 +57,11 @@ def process_img(image):
 
 
 if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(description='Video Reactive LIFX')
+    parser.add_argument('--dev', action="store_true", default=False)
+    args = parser.parse_args()
+
     for i in list(range(3))[::-1]:
         print(i+1)
         time.sleep(.1)
@@ -66,32 +72,39 @@ if __name__ == "__main__":
 
     blank_image = cv2.imread(os.path.join("media", "blank.png"))
 
-    dev = True
-
     while True:
-        screen = grab_screen(region=(0, 0, 1920, 1080))
-        # print('Frame took {} seconds'.format(time.time()-last_time)) # Seconds per frame
-        # print('{} FPS'.format(1/(time.time()-last_time))) #Frames per second
-        last_time = time.time()
-        resized = cv2.resize(screen, (480, 270), interpolation=cv2.INTER_AREA)
-        new_screen = process_img(resized)
+        try:
+            last_time = time.time()
+            screen = grab_screen(region=(0, 0, 1920, 1080))
+            resized = cv2.resize(screen, (480, 270),
+                                 interpolation=cv2.INTER_AREA)
+            new_screen = process_img(resized)
 
-        dom_color = cv2.mean(new_screen)
-        color_hsv = convert_to_hsv(dom_color)
-        bulb.set_color(color_hsv, 150, rapid=False)
-        b, g, r, _ = [int(x) for x in dom_color]
-        cv2.rectangle(blank_image,
-                      (0, 0),
-                      (480, 270),
-                      color=(b, g, r), thickness=-1)
-        if dev == True:
-            print(dom_color, color_hsv)
-            cv2.imshow('window1', new_screen)
-            cv2.imshow('window2', blank_image)
+            dom_color = cv2.mean(new_screen)
+            color_hsv = convert_to_hsv(dom_color)
+            bulb.set_color(color_hsv, 150, rapid=False)
+            b, g, r, a = [int(x) for x in dom_color]
+            cv2.rectangle(blank_image,
+                          (0, 0),
+                          (480, 270),
+                          color=(b, g, r), thickness=-1)
+            if args.dev == True:
+                cv2.imshow('window1', new_screen)
+                cv2.imshow('window2', blank_image)
+                h1, s1, v1, k1 = color_hsv
+                print("% 5.2f FPS - RGBA (%d,%d,%d,%d) - HSVK [%d,%d,%d,%d]" %
+                      (1/(time.time()-last_time), b, g, r, a, h1, s1, v1, k1))
+                # print(dom_color, color_hsv)
+                # print('Frame took {} seconds'.format(time.time()-last_time)) # Seconds per frame
+                # print('{} FPS'.format(1/(time.time()-last_time))) #Frames per second
 
-        if cv2.waitKey(25) & 0xFF == ord('q'):
+            if cv2.waitKey(25) & 0xFF == ord('q'):
+                cv2.destroyAllWindows()
+                break
+        except Exception as e:
             cv2.destroyAllWindows()
-            break
+            print(str(e))
+            time.sleep(1)
 
 
 # credits: https://adamspannbauer.github.io/2018/03/02/app-icon-dominant-colors/
