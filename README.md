@@ -36,7 +36,7 @@ python3 main.py
 
 ## Credits
 
-### Capturing video screen
+### Capturing and processing video screen
 
 https://github.com/Sentdex/pygta5
 
