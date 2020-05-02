@@ -30,8 +30,16 @@ Wanting to enhance the Video/TV Show/Movie viewing experience on a screen which 
 
 ## Running script locally
 
+Run script
+
 ```cmd
 python3 main.py
+```
+
+Running in dev mode with terminal output and realtime cv2 image windows
+
+```cmd
+python3 main.py --dev
 ```
 
 ## Credits
