@@ -49,7 +49,6 @@ def convert_to_hsv(dom):
 
 
 def process_img(image):
-    # convert to gray
     processed_img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     processed_img = cv2.GaussianBlur(processed_img, (5, 5), 0)
 
